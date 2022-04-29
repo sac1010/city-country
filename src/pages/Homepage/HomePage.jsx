@@ -10,7 +10,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
 import { Rows} from "../../components/Table/Rows";
-
+import LinearProgress from '@mui/material/LinearProgress';
+import { useDispatch, useSelector } from "react-redux";
+import { loadCities, loadSorted } from "../../redux/actions";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -37,26 +39,46 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export const HomePage = () => {
 
-  const [cities, setCities] = useState([]);
+  const [sort, setSort] = useState("")
+  const dispatch = useDispatch()
   useEffect(() => {
-    getCities();
-  }, []);
+   dispatch(loadCities())
+  }, [dispatch]);
+
+const {cities, loading} = useSelector((state)=>state.conCityReducer)
+const handleChange = (e)=>{
+setSort(e.target.value)
+dispatch(loadSorted(sort))
+}
 
 
-
-  const getCities = () => {
-    axios.get("https://city-country101.herokuapp.com/cities").then((res) => {
-      setCities(res.data);
-    });
-  };
+  // const getCities = () => {
+  //   setLoading(true)
+  //   axios.get("https://city-country101.herokuapp.com/cities").then((res) => {
+  //     setCities(res.data);
+  //   }).then(()=>{
+  //     setLoading(false)
+  //   });
+  // };
   return (
     <div className="table">
+      <div className="sort">
+        population
+      <select name="" id="" onChange={handleChange}>
+        <option value="">--</option>
+        <option value="asc">low to high</option>
+        <option value="desc">high to low</option>
+      </select>
+
+      </div>
+
+      {!loading?"":<LinearProgress color="secondary" />}
       <Table>
         <TableHead>
           <TableRow>
             <StyledTableCell>Country</StyledTableCell>
             <StyledTableCell>City</StyledTableCell>
-            <StyledTableCell>Populatiion</StyledTableCell>
+            <StyledTableCell>Population</StyledTableCell>
             <StyledTableCell>Edit</StyledTableCell>
             <StyledTableCell>Delete</StyledTableCell>
           </TableRow>
@@ -65,7 +87,7 @@ export const HomePage = () => {
           {cities.map((el) => {
             return (
               <>
-                <Rows  el={el} />
+                <Rows  el={el}/>
               </>
             );
           })}

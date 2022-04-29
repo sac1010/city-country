@@ -3,11 +3,18 @@ import React, { useState } from "react";
 import "./AddCountry.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 export const AddCountry = () => {
-  const [country, setCountry] = useState();
+  const [country, setCountry] = useState("");
+  const navigate = useNavigate()
   const handleSubmit = () => {
-    axios.post("https://city-country101.herokuapp.com/countries", { country });
+    axios.post("https://city-country101.herokuapp.com/countries", {country}).then(()=>{
+      navigate("/")
+    }).catch((err)=>{
+      console.log(err)
+      navigate("/")
+    });
   };
 
   return (

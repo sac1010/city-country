@@ -9,6 +9,8 @@ import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 import { TextField } from "@mui/material";
 import "./Rows.css"
+import { useDispatch } from "react-redux";
+import { loadDeleted, loadEdited } from "../../redux/actions";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -50,25 +52,30 @@ export const Rows = ({el}) => {
   const handleClose = () => setOpen(false);
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:3005/cities/${id}`)
+    dispatch(loadDeleted(id))
   };
+
+  const[edited, setEdited] = useState({
+    city: el.city,
+    country: el.country,
+    population: el.population
+  })
 
   const handleEdit = (e) => {
     setEdited({
-      ...setEdited,
-      [e.target.label]:e.target.value
+      ...edited,
+      [e.target.name]:e.target.value
     })
   };
-
+  
+  const dispatch = useDispatch()
   const edit = (id)=>{
-    axios.patch(`http://localhost:3005/cities/${id}`, edited)
+    dispatch(loadEdited(edited, id))
+    setOpen(false)
+    
   }
 
-  const[edited, setEdited] = useState({
-    city: "",
-    country: "",
-    population: 0
-  })
+
   return (
     
       <StyledTableRow>
@@ -95,6 +102,7 @@ export const Rows = ({el}) => {
                     value={edited.country}
                     id="standard-basic"
                     label="country"
+                    name="country"
                     variant="standard"
                     onChange={(e)=>{handleEdit(e)}}
                   />
@@ -102,6 +110,7 @@ export const Rows = ({el}) => {
                     value={edited.city}
                     id="standard-basic"
                     label="city"
+                    name="city"
                     variant="standard"
                     onChange={(e)=>{handleEdit(e)}}
                   />
@@ -109,6 +118,7 @@ export const Rows = ({el}) => {
                     value={edited.population}
                     id="standard-basic"
                     label="population"
+                    name="population"
                     variant="standard"
                     onChange={(e)=>{handleEdit(e)}}
                   />

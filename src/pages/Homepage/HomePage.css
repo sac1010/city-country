@@ -11,3 +11,7 @@ button{
 a{
     text-decoration: none;
 }
+.sort{
+    height: 50px;
+    text-align: right;
+}
