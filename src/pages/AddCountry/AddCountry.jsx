@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 export const AddCountry = () => {
   const [country, setCountry] = useState();
   const handleSubmit = () => {
-    axios.post("http://localhost:3005/countries", { country });
+    axios.post("https://city-country101.herokuapp.com/countries", { country });
   };
 
   return (

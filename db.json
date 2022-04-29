@@ -1,0 +1,43 @@
+{
+  "countries": [
+    {
+      "id": 1,
+      "country": "India"
+    },
+    {
+      "id": 2,
+      "country": "SriLanka"
+    },
+    {
+      "country": "asdasd",
+      "id": 3
+    },
+    {
+      "country": "wdafw",
+      "id": 4
+    },
+    {
+      "country": "india",
+      "id": 8
+    },
+    {
+      "country": "usa",
+      "id": 9
+    }
+  ],
+  "cities": [
+    {
+      "id": 2,
+      "city": "sdagaasf",
+      "country": "SriLanka",
+      "population": 2300000,
+      "undefined": "india"
+    },
+    {
+      "id": 2,
+      "city": "Colombo",
+      "country": "SriLanka",
+      "population": 2300000
+    }
+  ]
+}
