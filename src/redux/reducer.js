@@ -1,11 +1,12 @@
-import { GET_CITIES, SET_LOADING } from "./actionType"
+import { GET_CITIES, SET_LOADING, SET_PAGE } from "./actionType"
 
 
 const initState = {
     cities: [],
     countries:[],
     curCity: {},
-    loading:true
+    loading:true,
+    num:1
 }
 
 export const conCityReducer = (state = initState, action)=>{
@@ -23,6 +24,12 @@ export const conCityReducer = (state = initState, action)=>{
             return {
                 ...state,
                 loading:action.payload
+            }
+
+        case SET_PAGE:
+            return {
+                ...state,
+                num:action.payload
             }
 
         default:

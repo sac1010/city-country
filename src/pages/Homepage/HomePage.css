@@ -15,3 +15,9 @@ a{
     height: 50px;
     text-align: right;
 }
+.pag{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 25px;
+}

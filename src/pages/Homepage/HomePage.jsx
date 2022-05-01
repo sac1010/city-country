@@ -13,6 +13,7 @@ import { Rows} from "../../components/Table/Rows";
 import LinearProgress from '@mui/material/LinearProgress';
 import { useDispatch, useSelector } from "react-redux";
 import { loadCities, loadSorted } from "../../redux/actions";
+import Pagination from '@mui/material/Pagination';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -38,19 +39,20 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 export const HomePage = () => {
-
   const [sort, setSort] = useState("")
   const dispatch = useDispatch()
   useEffect(() => {
-   dispatch(loadCities())
+   dispatch(loadCities(1))
   }, [dispatch]);
 
-const {cities, loading} = useSelector((state)=>state.conCityReducer)
+const {cities, loading, num} = useSelector((state)=>state.conCityReducer)
 const handleChange = (e)=>{
 setSort(e.target.value)
 dispatch(loadSorted(sort))
 }
-
+const handlePageChange = (e)=>{
+  dispatch(loadCities(e.target.textContent))
+}
 
   // const getCities = () => {
   //   setLoading(true)
@@ -100,6 +102,12 @@ dispatch(loadSorted(sort))
       <Link to="/add-city">
         <Button variant="text">Add City</Button>
       </Link>
+      <div className="pag">
+      <Pagination 
+      onChange={handlePageChange}
+      count={Math.ceil(num/3)} color="secondary" />
+      </div>
+      
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import axios from "axios"
-import { GET_CITIES, SET_LOADING } from "./actionType"
+import { GET_CITIES, SET_LOADING, SET_PAGE } from "./actionType"
 
 
 const addCities = (cities)=>{
@@ -23,13 +23,25 @@ const setLoading = (payload)=>{
     }
    }
 
+   const setPages = (payload)=>{
+    return {
+        type: SET_PAGE,
+        payload: payload
+    }
+   }
 
 
-export const loadCities = ()=>{
+export const loadCities = (page)=>{
     return function(dispatch){
         dispatch(setLoading(true))
-        axios.get("https://city-country101.herokuapp.com/cities").then((res)=>{
+        axios.get("https://city-country101.herokuapp.com/cities", {
+            params: {
+              _page: page,
+              _limit: 3
+            }
+          }).then((res)=>{
             dispatch(addCities(res.data))
+            dispatch(setPages(res.headers["x-total-count"]))
             dispatch(setLoading(false))
         }).catch((err)=>{
             console.log(err)
